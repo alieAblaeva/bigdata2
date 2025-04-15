@@ -15,12 +15,16 @@ pip install -r requirements.txt
 # Package the virtual env.
 venv-pack -o .venv.tar.gz
 
+bash create_tables.sh
+
 # Collect data
 bash prepare_data.sh
 
-
 # Run the indexer
-bash index.sh data/sample.txt
+bash index.sh
 
 # Run the ranker
 bash search.sh "this is a query!"
+
+echo "Services started. Holding the container open..."
+tail -f /dev/null

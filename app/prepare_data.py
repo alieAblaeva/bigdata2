@@ -11,7 +11,7 @@ spark = SparkSession.builder \
 
 
 df = spark.read.parquet("/a.parquet")
-n = 1000
+n = 10
 df = df.select(['id', 'title', 'text']).sample(fraction=100 * n / df.count(), seed=0).limit(n)
 
 
@@ -24,4 +24,10 @@ def create_doc(row):
 df.foreach(create_doc)
 
 
-# df.write.csv("/index/data", sep = "\t")
+(df.select(['id', 'title', 'text'])
+.write
+.format("csv")
+.mode("overwrite")
+.option("sep", "\t")
+.option("header", "false")
+.save("hdfs:///index/data"))

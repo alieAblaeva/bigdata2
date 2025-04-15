@@ -11,7 +11,7 @@ spark = SparkSession.builder \
 
 
 df = spark.read.parquet("/a.parquet")
-n = 10
+n = 1000
 df = df.select(['id', 'title', 'text']).sample(fraction=100 * n / df.count(), seed=0).limit(n)
 
 
